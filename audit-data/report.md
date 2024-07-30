@@ -1,3 +1,34 @@
+---
+title: Protocol Audit Report
+author: Herman Effendi
+date: July 30, 2024
+header-includes:
+  - \usepackage{titling}
+  - \usepackage{graphicx}
+---
+
+\begin{titlepage}
+    \centering
+    \begin{figure}[h]
+        \centering
+        \includegraphics[width=0.5\textwidth]{logo.pdf} 
+    \end{figure}
+    \vspace*{2cm}
+    {\Huge\bfseries Protocol Audit Report\par}
+    \vspace{1cm}
+    {\Large Version 1.0\par}
+    \vspace{2cm}
+    {\Large\itshape Herman Effendi\par}
+    \vfill
+    {\large \today\par}
+\end{titlepage}
+
+\maketitle
+
+<!-- Your report starts here! -->
+
+Prepared by: Herman effendi
+
 # Table of Contents
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
@@ -64,15 +95,21 @@ For this contract, only the owner should be able to interact with the contract
 
 
 ### High
+
 #### [H-1] Storing password on-chain makes it visible to everyone and no longer private
 
-**Description:** All data stored on-chain is visible for everyone, and can be read directly from blockchain. The `PasswordStore::s_password` variable is intended to be a private variable and only accessed through the `PasswordStore::getPassword()` function, which is intended to be only called by the owner of the contract.
+**Description:** 
+
+All data stored on-chain is visible for everyone, and can be read directly from blockchain. The `PasswordStore::s_password` variable is intended to be a private variable and only accessed through the `PasswordStore::getPassword()` function, which is intended to be only called by the owner of the contract.
 
 we show one such method how to read the data off-chain below.
 
-**Impact:** Anyone can read the private password, severly breaking the functionality of the protocol
+**Impact:** 
+
+Anyone can read the private password, severly breaking the functionality of the protocol
 
 **Proof of Concept:**
+
 1. Create locally running on-chain
 ```bash
 make anvil
@@ -97,12 +134,16 @@ myPassword // output
 
 5. finally we can read the actual password from local on-chain anvil.
 
-**Recommended Mitigation:** Due to this, the overall the architecture of the contract should be rethought. One could encrypt the password off-chain, and store the encrypted password on-chain. This would require the user to remember another password off-chain to decrypt the password. however, you would also likely want to remove the view funtion as you wouldn't be want the user to accidently send a transaction with the password that decrypts the password.
+**Recommended Mitigation:** 
+
+Due to this, the overall the architecture of the contract should be rethought. One could encrypt the password off-chain, and store the encrypted password on-chain. This would require the user to remember another password off-chain to decrypt the password. however, you would also likely want to remove the view funtion as you wouldn't be want the user to accidently send a transaction with the password that decrypts the password.
 
 
 #### [H-2] `PasswordStore::setPassword` has no access controls, meaning non-owner could change the password 
 
-**Description:** The `Password::setPassword` function is set to be an `external` function. However, the natspec of the function and overall purpose of the smart contract is that `This function allows only the owner to set a new password.`
+**Description:** 
+
+The `Password::setPassword` function is set to be an `external` function. However, the natspec of the function and overall purpose of the smart contract is that `This function allows only the owner to set a new password.`
 
 ```javascript
     function setPassword(string memory newPassword) external {
@@ -112,9 +153,13 @@ myPassword // output
     }
 ```
 
-**Impact:** Anyone can set/change the password of the contract. severly breaking the contract intended functionality. 
+**Impact:**
 
-**Proof of Concept:**add the following to the `PasswordStore.t.sol` test file.
+ Anyone can set/change the password of the contract. severly breaking the contract intended functionality. 
+
+**Proof of Concept:**
+
+add the following to the `PasswordStore.t.sol` test file.
 
 <details>
 
@@ -136,7 +181,9 @@ myPassword // output
 ```
 </details>
 
-**Recommended Mitigation:** Add an access control conditional to the `PasswordStore::setPassword` function.
+**Recommended Mitigation:** 
+
+Add an access control conditional to the `PasswordStore::setPassword` function.
 
 ```javascript
     if(msg.sender != owner){
@@ -145,6 +192,7 @@ myPassword // output
 ```
 
 ### Informational
+
 #### [I-1] The `PasswordStore::getPassword` natspec indicates a parameter doesn't exist, causing the natspec to be incorrect.
 
 **Description:** 
@@ -164,11 +212,17 @@ myPassword // output
 
 The `PasswordStore::getPassword` function signature is `getPassword()` while the natspec says it should be `getPassword(string)`.
 
-**Impact:** The natspec is incorrect.
+**Impact:** 
 
-**Proof of Concept:** Remove the incorrect natspec line.
+The natspec is incorrect.
 
-**Recommended Mitigation:** Remove the incorrect natspec 
+**Proof of Concept:** 
+
+Remove the incorrect natspec line.
+
+**Recommended Mitigation:** 
+
+Remove the incorrect natspec 
 
 ```diff
 -   * @param newPassword The new password to set.
