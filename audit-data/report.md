@@ -1,33 +1,31 @@
 ---
-title: Protocol Audit Report
+title: Password Store Audit Report
 author: Herman Effendi
 date: July 30, 2024
 header-includes:
   - \usepackage{titling}
   - \usepackage{graphicx}
+  - \usepackage{hyperref} 
 ---
 
 \begin{titlepage}
     \centering
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.5\textwidth]{logo.pdf} 
+        \includegraphics[width=0.8\textwidth]{logo.pdf} 
     \end{figure}
-    \vspace*{2cm}
-    {\Huge\bfseries Protocol Audit Report\par}
-    \vspace{1cm}
-    {\Large Version 1.0\par}
     \vspace{2cm}
-    {\Large\itshape Herman Effendi\par}
+    \noindent\rule{1\textwidth}{0.85pt}
+    {\Huge\bfseries Password Store Audit Report\par}
+    \noindent\rule{1\textwidth}{0.85pt}
+    {\Large\itshape Prepared by Pluton \par}
+    {\Large Version 1.0\par}
+    \vspace{5cm}
+    {\Large\bfseries Lead Auditor \par} 
+    {\Large \href{https://herman-effendi.vercel.app/}{Herman Effendi} \par} 
     \vfill
     {\large \today\par}
 \end{titlepage}
-
-\maketitle
-
-<!-- Your report starts here! -->
-
-Prepared by: Herman effendi
 
 # Table of Contents
 - [Table of Contents](#table-of-contents)
