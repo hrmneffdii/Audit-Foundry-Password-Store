@@ -1,6 +1,6 @@
 ---
 title: Password Store Audit Report
-author: Herman Effendi
+author: Pluton
 date: July 30, 2024
 header-includes:
   - \usepackage{titling}
@@ -27,6 +27,8 @@ header-includes:
     {\large \today\par}
 \end{titlepage}
 
+\newpage
+
 # Table of Contents
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
@@ -42,19 +44,15 @@ header-includes:
     - [Informational](#informational)
       - [\[I-1\] The `PasswordStore::getPassword` natspec indicates a parameter doesn't exist, causing the natspec to be incorrect.](#i-1-the-passwordstoregetpassword-natspec-indicates-a-parameter-doesnt-exist-causing-the-natspec-to-be-incorrect)
 
+\newpage
 
 # Introduction
 
-The Kupu team makes all effort to find as many vulnerabilities in the code in the given time period, but holds no responsibilities for the findings provided in this document. A security audit by the team is not an endorsement of the underlying business or product. The audit was time-boxed and the review of the code was solely on the security aspects of the Solidity implementation of the contracts.
-
-Prepared by: [Herman effendi](https://herman-effendi.vercel.app/)
-
-Lead Auditor Security: 
-- Herman effendi
+The Pluton team has diligently worked to identify as many vulnerabilities as possible within the constraints of the allotted time frame. However, we disclaim any responsibility for the issues highlighted in this report. Please note that our security audit does not imply endorsement or approval of the business or product under review. The audit was conducted with a specific focus on the security aspects of the Solidity implementation of the contracts and was limited in scope.
 
 # Protocol Summary
 
-PasswordStore is a protocol dedicated to storage and retrieval of a user’s passwords. The protocol is
+`PasswordStore` is a protocol dedicated to storage and retrieval of a user’s passwords. The protocol is
 designed to be used by a single user, and is not designed to be used by multiple users. Only the owner
 should be able to set and access this password
 
@@ -69,16 +67,20 @@ should be able to set and access this password
 
 We use the [CodeHawks](https://docs.codehawks.com/hawks-auditors/how-to-evaluate-a-finding-severity) severity matrix to determine severity. See the documentation for more details.
 
-# Audit Details 
-## Scope 
-```
-src/
---- PasswordStore.sol
-```
-## Roles
-- Owner: Is the only one who should be able to set and access the password.
+\newpage
 
-For this contract, only the owner should be able to interact with the contract
+# Audit Details 
+
+## Scope 
+
+```bash
+src/
+|--- PasswordStore.sol
+```
+
+## Roles
+
+- Owner: Is the only one who should be able to set and access the password. For this contract, only the owner should be able to interact with the contract
 
 ## Findings
 
